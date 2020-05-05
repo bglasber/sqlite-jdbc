@@ -20,11 +20,12 @@ CCFLAGS:= -I$(SQLITE_OUT) -I$(SQLITE_AMAL_DIR) $(CCFLAGS)
 
 $(TARGET)/sqlite3.c:
 	@mkdir -p $(@D)
-	cp ~/Documents/code/sqlite/sqlite3.c $(TARGET)/
+	cp /hdd1/sqlite/sqlite3.c $(TARGET)/
+	cp /hdd1/sqlite/sqlite3.h $(TARGET)/
 
 $(TARGET)/sqlite3ext.h:
 	@mkdir -p $(@D)
-	cp ~/Documents/code/sqlite/sqlite3ext.h $(TARGET)/
+	cp /hdd1/sqlite/sqlite3ext.h $(TARGET)/
 
 $(TARGET)/common-lib/org/sqlite/%.class: src/main/java/org/sqlite/%.java
 	@mkdir -p $(@D)
@@ -40,7 +41,6 @@ test:
 
 clean: clean-native clean-java clean-tests
 
-
 $(SQLITE_OUT)/sqlite3.o : $(TARGET)/sqlite3.c $(TARGET)/sqlite3ext.h
 	@mkdir -p $(@D)
 	perl -p -e "s/sqlite3_api;/sqlite3_api = 0;/g" \
@@ -49,6 +49,7 @@ $(SQLITE_OUT)/sqlite3.o : $(TARGET)/sqlite3.c $(TARGET)/sqlite3ext.h
 	perl -p -e "s/^opendb_out:/  if(!db->mallocFailed && rc==SQLITE_OK){ rc = RegisterExtensionFunctions(db); }\nopendb_out:/;" \
 	    $(TARGET)/sqlite3.c > $(SQLITE_OUT)/sqlite3.c
 	cat src/main/ext/*.c >> $(SQLITE_OUT)/sqlite3.c
+	cp $(TARGET)/sqlite3.h $(SQLITE_OUT)/sqlite3.h
 	$(CC) -o $@ -c $(CCFLAGS) \
 	    -DSQLITE_ENABLE_LOAD_EXTENSION=1 \
 	    -DSQLITE_HAVE_ISNAN \
