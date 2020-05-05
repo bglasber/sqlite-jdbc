@@ -6,7 +6,7 @@ endif
 
 JAVA  := "$$JAVA_HOME/bin/java"
 JAVAC := "$$JAVA_HOME/bin/javac" 
-JAVAH := "$$JAVA_HOME/bin/javah"
+JAVAH := "$$JAVA_HOME/bin/javac"
 
 TARGET := target
 OSINFO_CLASS := org.sqlite.OSInfo
